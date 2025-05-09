@@ -5,21 +5,78 @@ const snakeSize = 10;
 let snake = [{x: 50, y: 50}];
 let direction = "RIGHT";
 let food = generateFood();
+let score = 0;
+let highScore = localStorage.getItem("highScore") || 0;
+let gameStarted = false;
+
+const startBtn = document.getElementById("startBtn");
+const retryBtn = document.getElementById("retryBtn");
+const scoreDisplay = document.getElementById("scoreDisplay");
+const finalScoreDisplay = document.getElementById("finalScore");
+const finalRecordScoreDisplay = document.getElementById("finalRecordScore");
+const gameOverMessage = document.getElementById("gameOver");
+const newRecordMessage = document.getElementById("newRecord");
+
+startBtn.addEventListener("click", startGame);
+retryBtn.addEventListener("click", restartGame);
 
 document.addEventListener("keydown", changeDirection);
+document.getElementById("up").addEventListener("click", () => changeDirection({ key: "ArrowUp" }));
+document.getElementById("down").addEventListener("click", () => changeDirection({ key: "ArrowDown" }));
+document.getElementById("left").addEventListener("click", () => changeDirection({ key: "ArrowLeft" }));
+document.getElementById("right").addEventListener("click", () => changeDirection({ key: "ArrowRight" }));
+
+function startGame() {
+    gameStarted = true;
+    score = 0;
+    snake = [{x: 50, y: 50}];
+    direction = "RIGHT";
+    food = generateFood();
+
+    canvas.style.display = "block";
+    startBtn.style.display = "none";
+    retryBtn.style.display = "none";
+    scoreDisplay.style.display = "block";
+    document.querySelector(".controls").style.display = "flex";
+    gameOverMessage.style.display = "none";
+    newRecordMessage.style.display = "none";
+
+    setInterval(gameLoop, 100);
+}
+
+function restartGame() {
+    gameStarted = true;
+    score = 0;
+    snake = [{x: 50, y: 50}];
+    direction = "RIGHT";
+    food = generateFood();
+
+    canvas.style.display = "block";
+    retryBtn.style.display = "none";
+    scoreDisplay.style.display = "block";
+    document.querySelector(".controls").style.display = "flex";
+    gameOverMessage.style.display = "none";
+    newRecordMessage.style.display = "none";
+
+    setInterval(gameLoop, 100);
+}
 
 function gameLoop() {
     moveSnake();
     if (checkCollisions()) {
-        alert("Game Over!");
-        resetGame();
+        gameOver();
     }
     if (checkFoodCollision()) {
-        snake.push({x: food.x, y: food.y});
+        score++;
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem("highScore", highScore);
+        }
         food = generateFood();
     }
 
     drawGame();
+    scoreDisplay.innerText = `Score: ${score}`;
 }
 
 function drawGame() {
@@ -73,10 +130,17 @@ function generateFood() {
     return { x: foodX, y: foodY };
 }
 
-function resetGame() {
-    snake = [{x: 50, y: 50}];
-    direction = "RIGHT";
-    food = generateFood();
+function gameOver() {
+    gameStarted = false;
+    gameOverMessage.style.display = "block";
+    finalScoreDisplay.innerText = score;
+    if (score > highScore) {
+        newRecordMessage.style.display = "block";
+        finalRecordScoreDisplay.innerText = score;
+    }
+    retryBtn.style.display = "block";
+    canvas.style.display = "none";
+    scoreDisplay.style.display = "none";
+    document.querySelector(".controls").style.display = "none";
 }
 
-setInterval(gameLoop, 100);
