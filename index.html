@@ -18,29 +18,34 @@
         canvas {
             background-color: #000;
             border: 2px solid #fff;
+            display: block;
+            margin: 10px 0;
         }
 
         .controls {
             display: flex;
             justify-content: center;
             margin-top: 20px;
+            position: absolute;
+            bottom: 20px;
         }
 
         .btn {
             background-color: #333;
             color: #fff;
-            padding: 10px;
+            padding: 15px;
             margin: 5px;
             border: 2px solid #fff;
             cursor: pointer;
             font-size: 20px;
+            border-radius: 10px;
         }
 
         .btn:active {
             background-color: #555;
         }
 
-        .instructions, .score {
+        .score {
             color: white;
             font-size: 18px;
             margin-top: 10px;
@@ -70,11 +75,26 @@
             font-size: 20px;
             cursor: pointer;
         }
+
+        .instructions {
+            color: white;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .scoreDisplay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <button id="startBtn">Start Game</button>
     <canvas id="gameCanvas" width="600" height="400" style="display: none;"></canvas>
+    <div id="scoreDisplay" class="scoreDisplay">Score: 0</div>
     <div class="controls" style="display: none;">
         <button class="btn" id="up">↑</button>
         <button class="btn" id="left">←</button>
@@ -84,9 +104,9 @@
     <div id="gameOver" class="score">Game Over! Your score: <span id="finalScore"></span></div>
     <div id="newRecord" class="score">New Record! Your score: <span id="finalRecordScore"></span></div>
     <button id="retryBtn">Play Again</button>
-    <div class="instructions" style="display: none;">
+    <div class="instructions">
         <p>Use the arrow buttons to control the snake.</p>
-        <p id="scoreDisplay">Score: 0</p>
+        <p id="scoreText">Score: 0</p>
     </div>
 
     <script src="game.js"></script>
