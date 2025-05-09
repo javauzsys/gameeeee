@@ -24,7 +24,8 @@
 
         .controls {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
+            width: 100%;
             margin-top: 20px;
             position: absolute;
             bottom: 20px;
@@ -76,12 +77,6 @@
             cursor: pointer;
         }
 
-        .instructions {
-            color: white;
-            font-size: 18px;
-            margin-top: 10px;
-        }
-
         .scoreDisplay {
             position: absolute;
             top: 10px;
@@ -104,10 +99,6 @@
     <div id="gameOver" class="score">Game Over! Your score: <span id="finalScore"></span></div>
     <div id="newRecord" class="score">New Record! Your score: <span id="finalRecordScore"></span></div>
     <button id="retryBtn">Play Again</button>
-    <div class="instructions">
-        <p>Use the arrow buttons to control the snake.</p>
-        <p id="scoreText">Score: 0</p>
-    </div>
 
     <script src="game.js"></script>
 </body>
