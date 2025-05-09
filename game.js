@@ -8,6 +8,7 @@ let food = generateFood();
 let score = 0;
 let highScore = localStorage.getItem("highScore") || 0;
 let gameStarted = false;
+let gameInterval; // O‘yin intervali
 
 const startBtn = document.getElementById("startBtn");
 const retryBtn = document.getElementById("retryBtn");
@@ -41,7 +42,7 @@ function startGame() {
     gameOverMessage.style.display = "none";
     newRecordMessage.style.display = "none";
 
-    setInterval(gameLoop, 100);
+    gameInterval = setInterval(gameLoop, 100); // O‘yinni davom ettirish
 }
 
 function restartGame() {
@@ -58,7 +59,7 @@ function restartGame() {
     gameOverMessage.style.display = "none";
     newRecordMessage.style.display = "none";
 
-    setInterval(gameLoop, 100);
+    gameInterval = setInterval(gameLoop, 100); // O‘yinni davom ettirish
 }
 
 function gameLoop() {
@@ -134,6 +135,7 @@ function generateFood() {
 
 function gameOver() {
     gameStarted = false;
+    clearInterval(gameInterval); // O‘yin to‘xtadi
     gameOverMessage.style.display = "block";
     finalScoreDisplay.innerText = score;
     if (score > highScore) {
