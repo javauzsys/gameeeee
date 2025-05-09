@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const snakeSize = 10;
+const snakeSize = 15; // Ilonni kattalashtirdim
 let snake = [{x: 50, y: 50}];
 let direction = "RIGHT";
 let food = generateFood();
@@ -88,7 +88,9 @@ function drawGame() {
     }
 
     ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, snakeSize, snakeSize);
+    ctx.beginPath();
+    ctx.arc(food.x + snakeSize / 2, food.y + snakeSize / 2, snakeSize / 2, 0, 2 * Math.PI);
+    ctx.fill();
 }
 
 function moveSnake() {
@@ -143,4 +145,3 @@ function gameOver() {
     scoreDisplay.style.display = "none";
     document.querySelector(".controls").style.display = "none";
 }
-
